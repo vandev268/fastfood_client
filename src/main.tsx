@@ -5,6 +5,7 @@ import App from './App.tsx'
 import { BrowserRouter } from 'react-router'
 import ErrorBoundary from './components/ErrorBoundary.tsx'
 import AppProvider from './components/AppProvider.tsx'
+import PathRecorder from './components/PathRecorder.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -14,6 +15,7 @@ createRoot(document.getElementById('root')!).render(
           <App />
         </ErrorBoundary>
       </AppProvider>
+      <PathRecorder />
     </BrowserRouter>
   </StrictMode>
 )
