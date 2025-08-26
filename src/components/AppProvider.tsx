@@ -1,4 +1,5 @@
 import { clearLocalStorage, getProfileFromLocalStorage } from '@/lib/utils'
+import type { ExtendedCartItemType } from '@/schemaValidations/cart.schema'
 import type { ProfileType } from '@/schemaValidations/profile.schema'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
@@ -17,12 +18,16 @@ const AppContext = createContext<{
   isAuth: boolean
   profile: ProfileType | null
   setProfile: (profile: ProfileType | null) => void
+  extendedCartItems: ExtendedCartItemType[]
+  setExtendedCartItems: React.Dispatch<React.SetStateAction<ExtendedCartItemType[]>>
   reset: () => void
 }>({
   isAuth: false,
   profile: null,
-  setProfile: () => null,
-  reset: () => {}
+  setProfile: () => {},
+  reset: () => {},
+  extendedCartItems: [],
+  setExtendedCartItems: () => null
 })
 
 export const useAppContext = () => {
@@ -31,6 +36,7 @@ export const useAppContext = () => {
 
 export default function AppProvider({ children }: { children: ReactNode }) {
   const [profile, setProfileState] = useState<ProfileType | null>(null)
+  const [extendedCartItems, setExtendedCartItems] = useState<ExtendedCartItemType[]>([])
 
   const count = useRef(0)
   useEffect(() => {
@@ -58,7 +64,7 @@ export default function AppProvider({ children }: { children: ReactNode }) {
 
   const isAuth = Boolean(profile)
   return (
-    <AppContext.Provider value={{ isAuth, profile, setProfile, reset }}>
+    <AppContext.Provider value={{ isAuth, profile, setProfile, extendedCartItems, setExtendedCartItems, reset }}>
       <QueryClientProvider client={queryClient}>
         {children}
         {/* <ReactQueryDevtools initialIsOpen={false} /> */}

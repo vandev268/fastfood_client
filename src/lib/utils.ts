@@ -9,6 +9,7 @@ import { type UseFormSetError } from 'react-hook-form'
 import { AxiosError } from 'axios'
 import { HttpStatus } from '@/constants/http'
 import { toast } from 'sonner'
+import type { ProductVariantsType } from '@/schemaValidations/product.schema'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -141,4 +142,22 @@ export const getFirstNameClient = (name: string) => {
     return formattedFirstName.slice(0, 6) + '...'
   }
   return formattedFirstName
+}
+
+export const parseVariantInfo = (variantValue: string, variantsConfig: ProductVariantsType) => {
+  if (!variantsConfig || variantsConfig.length === 0) return null
+
+  const parts = variantValue.split(' / ')
+  const variantInfo: Array<{ type: string; value: string }> = []
+
+  variantsConfig.forEach((config, index) => {
+    if (parts[index] && config.type !== 'default') {
+      variantInfo.push({
+        type: config.type,
+        value: parts[index]
+      })
+    }
+  })
+
+  return variantInfo
 }

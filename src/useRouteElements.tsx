@@ -20,6 +20,9 @@ import OAuth from './pages/client/OAuth'
 import Register from './pages/client/Register'
 import Product from './pages/client/Product'
 import ProductDetail from './pages/client/ProductDetail'
+import Cart from './pages/client/Cart'
+import PaymentCallback from './pages/client/PaymentCallback'
+import Checkout from './pages/client/Checkout'
 
 const MANAGE_ROLE = [RoleName.Admin, RoleName.Manager] as string[]
 const EMPLOYEE_ROLE = [RoleName.Admin, RoleName.Manager, RoleName.Employee] as string[]
@@ -171,8 +174,26 @@ export default function useRouteElements() {
               element: <ManageSetting />
             }
           ]
+        },
+        {
+          path: '',
+          element: <ClientLayout />,
+          children: [
+            {
+              path: 'cart',
+              element: <Cart />
+            },
+            {
+              path: 'checkout',
+              element: <Checkout />
+            }
+          ]
         }
       ]
+    },
+    {
+      path: 'payment-callback',
+      element: <PaymentCallback />
     },
     {
       path: '*',
