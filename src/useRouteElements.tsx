@@ -12,6 +12,7 @@ import ManageCategory from './pages/manage/Category'
 import ManageProduct from './pages/manage/Product'
 import ManageTable from './pages/manage/Table'
 import ManageCoupon from './pages/manage/Coupon'
+import ManageSetting from './pages/manage/Setting'
 
 const MANAGE_ROLE = [RoleName.Admin, RoleName.Manager] as string[]
 const EMPLOYEE_ROLE = [RoleName.Admin, RoleName.Manager, RoleName.Employee] as string[]
@@ -118,7 +119,7 @@ export default function useRouteElements() {
             },
             {
               path: 'setting',
-              element: <h1>Setting</h1>
+              element: <ManageSetting />
             }
           ]
         }
