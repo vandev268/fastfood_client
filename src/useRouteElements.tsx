@@ -7,6 +7,9 @@ import ManageLayout from './layouts/manage'
 import ManageLogin from './pages/manage/Login'
 import ManageRole from './pages/manage/Role'
 import ManageUser from './pages/manage/User'
+import ManageTag from './pages/manage/Tag'
+import ManageCategory from './pages/manage/Category'
+import ManageProduct from './pages/manage/Product'
 
 const MANAGE_ROLE = [RoleName.Admin, RoleName.Manager] as string[]
 const EMPLOYEE_ROLE = [RoleName.Admin, RoleName.Manager, RoleName.Employee] as string[]
@@ -77,15 +80,15 @@ export default function useRouteElements() {
             },
             {
               path: 'products',
-              element: <h1>Products</h1>
+              element: <ManageProduct />
             },
             {
               path: 'categories',
-              element: <h1>Categories</h1>
+              element: <ManageCategory />
             },
             {
               path: 'tags',
-              element: <h1>Tags</h1>
+              element: <ManageTag />
             },
             {
               path: 'coupons',
