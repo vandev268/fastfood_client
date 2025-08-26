@@ -1,3 +1,4 @@
+import { CouponDiscountType } from '@/constants/coupon'
 import { ProductStatus, TypeProduct } from '@/constants/product'
 import { TableLocation, TableStatus } from '@/constants/table'
 import { TagType } from '@/constants/tag'
@@ -185,5 +186,40 @@ export const formatTableStatusColor = ({
       return `${className} bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300`
     default:
       return `${className} bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300`
+  }
+}
+
+export const formatCouponTypeText = (type: string) => {
+  switch (type) {
+    case CouponDiscountType.Percent:
+      return LANGUAGE === 'vi' ? 'Phần trăm' : 'Percentage'
+    case CouponDiscountType.Amount:
+      return LANGUAGE === 'vi' ? 'Số tiền' : 'Amount'
+    default:
+      return LANGUAGE === 'vi' ? 'Không xác định' : 'Unknown'
+  }
+}
+
+export const formatCouponStatusText = (isActive: boolean) => {
+  switch (isActive) {
+    case true:
+      return LANGUAGE === 'vi' ? 'Hoạt động' : 'Active'
+    case false:
+      return LANGUAGE === 'vi' ? 'Dừng hoạt động' : 'Inactive'
+  }
+}
+
+export const formatCouponStatusColor = ({
+  className = 'text-xs font-medium me-2 px-2.5 py-0.5 rounded-full',
+  isActive
+}: {
+  className?: string
+  isActive: boolean
+}) => {
+  switch (isActive) {
+    case true:
+      return `${className} bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300`
+    case false:
+      return `${className} bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300`
   }
 }

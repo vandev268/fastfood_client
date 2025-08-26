@@ -11,6 +11,7 @@ import ManageTag from './pages/manage/Tag'
 import ManageCategory from './pages/manage/Category'
 import ManageProduct from './pages/manage/Product'
 import ManageTable from './pages/manage/Table'
+import ManageCoupon from './pages/manage/Coupon'
 
 const MANAGE_ROLE = [RoleName.Admin, RoleName.Manager] as string[]
 const EMPLOYEE_ROLE = [RoleName.Admin, RoleName.Manager, RoleName.Employee] as string[]
@@ -93,7 +94,7 @@ export default function useRouteElements() {
             },
             {
               path: 'coupons',
-              element: <h1>Coupons</h1>
+              element: <ManageCoupon />
             },
             {
               path: 'tables',
