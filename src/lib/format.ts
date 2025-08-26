@@ -1,5 +1,8 @@
 import { CouponDiscountType } from '@/constants/coupon'
+import { OrderStatus, OrderType } from '@/constants/order'
+import { PaymentMethod } from '@/constants/payment'
 import { ProductStatus, TypeProduct } from '@/constants/product'
+import { ReservationStatus } from '@/constants/reservation'
 import { TableLocation, TableStatus } from '@/constants/table'
 import { TagType } from '@/constants/tag'
 import { UserStatus } from '@/constants/user'
@@ -283,5 +286,128 @@ export const formatMostViewedProductsReason = (reason: string): { user: number; 
   return {
     user: userMatch ? parseInt(userMatch[1], 10) : 0,
     view: viewMatch ? parseInt(viewMatch[1], 10) : 0
+  }
+}
+
+export const formatOrderStatusText = (status: string) => {
+  switch (status) {
+    case OrderStatus.Pending:
+      return LANGUAGE === 'vi' ? 'Chờ xác nhận' : 'Pending'
+    case OrderStatus.Confirmed:
+      return LANGUAGE === 'vi' ? 'Đã xác nhận' : 'Confirmed'
+    case OrderStatus.Preparing:
+      return LANGUAGE === 'vi' ? 'Đang chuẩn bị' : 'Preparing'
+    case OrderStatus.Ready:
+      return LANGUAGE === 'vi' ? 'Sẵn sàng' : 'Ready'
+    case OrderStatus.Served:
+      return LANGUAGE === 'vi' ? 'Đã phục vụ' : 'Served'
+    case OrderStatus.OutForDelivery:
+      return LANGUAGE === 'vi' ? 'Đang giao hàng' : 'Out for Delivery'
+    case OrderStatus.Completed:
+      return LANGUAGE === 'vi' ? 'Hoàn thành' : 'Completed'
+    case OrderStatus.Cancelled:
+      return LANGUAGE === 'vi' ? 'Đã hủy' : 'Cancelled'
+    case OrderStatus.CancelledByKitchen:
+      return LANGUAGE === 'vi' ? 'Đã hủy bởi bếp' : 'Cancelled by Kitchen'
+    default:
+      return LANGUAGE === 'vi' ? 'Tất cả' : 'All'
+  }
+}
+
+export const formatOrderStatusColor = ({
+  className = 'text-xs font-medium me-2 px-2.5 py-0.5 rounded-full',
+  status
+}: {
+  className?: string
+  status: string
+}) => {
+  switch (status) {
+    case OrderStatus.Pending:
+      return `${className} bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300`
+    case OrderStatus.Confirmed:
+      return `${className} bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300`
+    case OrderStatus.Preparing:
+      return `${className} bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300`
+    case OrderStatus.Ready:
+      return `${className} bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-300`
+    case OrderStatus.Served:
+      return `${className} bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300`
+    case OrderStatus.OutForDelivery:
+      return `${className} bg-orange-100 text-orange-800 dark:bg-orange-700 dark:text-orange-300`
+    case OrderStatus.Completed:
+      return `${className} bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300`
+    case OrderStatus.Cancelled:
+      return `${className} bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300`
+    case OrderStatus.CancelledByKitchen:
+      return `${className} bg-gray-200 text-gray-800 dark:bg-gray-600 dark:text-gray-200`
+    default:
+      return `${className} bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300`
+  }
+}
+
+export const formatOrderTypeText = (type: string) => {
+  switch (type) {
+    case OrderType.Delivery:
+      return LANGUAGE === 'vi' ? 'Giao hàng' : 'Delivery'
+    case OrderType.DineIn:
+      return LANGUAGE === 'vi' ? 'Ăn tại chỗ' : 'Dine In'
+    case OrderType.Takeaway:
+      return LANGUAGE === 'vi' ? 'Mang đi' : 'Takeaway'
+    default:
+      return LANGUAGE === 'vi' ? 'Loại khác' : 'Other Type'
+  }
+}
+
+export const formatPaymentMethodText = (method: string) => {
+  switch (method) {
+    case PaymentMethod.Cash:
+      return LANGUAGE === 'vi' ? 'Tiền mặt' : 'Cash'
+    case PaymentMethod.COD:
+      return LANGUAGE === 'vi' ? 'Thanh toán khi nhận hàng' : 'Cash on Delivery'
+    case PaymentMethod.MOMO:
+      return LANGUAGE === 'vi' ? 'Momo' : 'Momo Payment'
+    case PaymentMethod.VNPay:
+      return LANGUAGE === 'vi' ? 'VNPay' : 'VNPay Payment'
+    default:
+      return LANGUAGE === 'vi' ? 'Phương thức khác' : 'Other Method'
+  }
+}
+
+export const formatReservationStatusText = (status: string) => {
+  switch (status) {
+    case ReservationStatus.Pending:
+      return LANGUAGE === 'vi' ? 'Chờ xử lý' : 'Pending'
+    case ReservationStatus.Confirmed:
+      return LANGUAGE === 'vi' ? 'Đã xác nhận' : 'Confirmed'
+    case ReservationStatus.Arrived:
+      return LANGUAGE === 'vi' ? 'Đã đến' : 'Arrived'
+    case ReservationStatus.Completed:
+      return LANGUAGE === 'vi' ? 'Hoàn thành' : 'Completed'
+    case ReservationStatus.Cancelled:
+      return LANGUAGE === 'vi' ? 'Đã hủy' : 'Cancelled'
+    default:
+      return LANGUAGE === 'vi' ? 'Tất cả' : 'All'
+  }
+}
+export const formatReservationStatusColor = ({
+  className = 'text-xs font-medium me-2 px-2.5 py-0.5 rounded-full',
+  status
+}: {
+  className?: string
+  status: string
+}) => {
+  switch (status) {
+    case ReservationStatus.Pending:
+      return `${className} bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300`
+    case ReservationStatus.Confirmed:
+      return `${className} bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300`
+    case ReservationStatus.Arrived:
+      return `${className} bg-orange-100 text-orange-800 dark:bg-orange-700 dark:text-orange-300`
+    case ReservationStatus.Completed:
+      return `${className} bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300`
+    case ReservationStatus.Cancelled:
+      return `${className} bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300`
+    default:
+      return `${className} bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300`
   }
 }

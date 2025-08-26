@@ -24,6 +24,11 @@ import Cart from './pages/client/Cart'
 import PaymentCallback from './pages/client/PaymentCallback'
 import Checkout from './pages/client/Checkout'
 import Reservation from './pages/client/Reservation'
+import ProfileLayout from './pages/client/Profile'
+import Information from './pages/client/Profile/pages/Information'
+import ChangePassword from './pages/client/Profile/pages/ChangePassword'
+import ReservationHistory from './pages/client/Profile/pages/ReservationHistory'
+import OrderHistory from './pages/client/Profile/pages/OrderHistory'
 
 const MANAGE_ROLE = [RoleName.Admin, RoleName.Manager] as string[]
 const EMPLOYEE_ROLE = [RoleName.Admin, RoleName.Manager, RoleName.Employee] as string[]
@@ -191,6 +196,32 @@ export default function useRouteElements() {
             {
               path: 'checkout',
               element: <Checkout />
+            },
+            {
+              path: 'profile',
+              element: <ProfileLayout />,
+              children: [
+                {
+                  path: '',
+                  element: <Information />
+                },
+                {
+                  path: 'change-password',
+                  element: <ChangePassword />
+                },
+                {
+                  path: 'reservations',
+                  element: <ReservationHistory />
+                },
+                {
+                  path: 'orders-history/online',
+                  element: <OrderHistory orderType='Delivery' />
+                },
+                {
+                  path: 'orders-history/dine-in',
+                  element: <OrderHistory orderType='DineIn' />
+                }
+              ]
             }
           ]
         }
