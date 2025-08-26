@@ -83,6 +83,27 @@ export const formatTagTypeText = (type: string) => {
   }
 }
 
+export const formatTagTypeColor = ({
+  className = 'text-xs font-medium me-2 px-2.5 py-0.5 rounded-full',
+  type
+}: {
+  className?: string
+  type: string
+}) => {
+  switch (type) {
+    case TagType.Custom:
+      return `${className} bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300`
+    case TagType.Marketing:
+      return `${className} bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300`
+    case TagType.Seasonal:
+      return `${className} bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300`
+    case TagType.Spice:
+      return `${className} bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300`
+    default:
+      return `${className} bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300`
+  }
+}
+
 export const formatTypeProductText = (type: string) => {
   switch (type) {
     case TypeProduct.Single:
@@ -93,6 +114,25 @@ export const formatTypeProductText = (type: string) => {
       return LANGUAGE === 'vi' ? 'Combo tùy chỉnh' : 'Custom Combo'
     default:
       return LANGUAGE === 'vi' ? 'Không xác định' : 'Unknown'
+  }
+}
+
+export const formatTypeProductColor = ({
+  className = 'text-xs font-medium me-2 px-2.5 py-0.5 rounded-full',
+  type
+}: {
+  className?: string
+  type: string
+}) => {
+  switch (type) {
+    case TypeProduct.Single:
+      return `${className} bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300`
+    case TypeProduct.FixedCombo:
+      return `${className} bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300`
+    case TypeProduct.CustomCombo:
+      return `${className} bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300`
+    default:
+      return `${className} bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300`
   }
 }
 
@@ -221,5 +261,16 @@ export const formatCouponStatusColor = ({
       return `${className} bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300`
     case false:
       return `${className} bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300`
+  }
+}
+
+export const formatMostViewedProductsReason = (reason: string): { user: number; view: number } => {
+  // Extract numbers from string like "Được quan tâm nhất (1 người xem, 21 lượt gần đây)"
+  const userMatch = reason.match(/(\d+)\s*người\s*xem/)
+  const viewMatch = reason.match(/(\d+)\s*lượt\s*gần\s*đây/)
+
+  return {
+    user: userMatch ? parseInt(userMatch[1], 10) : 0,
+    view: viewMatch ? parseInt(viewMatch[1], 10) : 0
   }
 }
