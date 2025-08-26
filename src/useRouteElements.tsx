@@ -1,10 +1,11 @@
 import { Navigate, Outlet, useLocation, useRoutes } from 'react-router'
 import NotFound from './components/NotFound'
-import AuthLayout from './layouts/auth'
-import ManageLogin from './pages/manage/Login'
 import { RoleName } from './constants/role'
 import { useAppContext } from './components/AppProvider'
+import AuthLayout from './layouts/auth'
 import ManageLayout from './layouts/manage'
+import ManageLogin from './pages/manage/Login'
+import ManageRole from './pages/manage/Role'
 
 const MANAGE_ROLE = [RoleName.Admin, RoleName.Manager] as string[]
 const EMPLOYEE_ROLE = [RoleName.Admin, RoleName.Manager, RoleName.Employee] as string[]
@@ -107,7 +108,7 @@ export default function useRouteElements() {
             },
             {
               path: 'roles',
-              element: <h1>Roles</h1>
+              element: <ManageRole />
             },
             {
               path: 'setting',

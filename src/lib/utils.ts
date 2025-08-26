@@ -100,3 +100,19 @@ export function handleError(error: any, setError?: UseFormSetError<any>, duratio
   //   })
   // }
 }
+
+export const decodeHtmlEntities = (text: string): string => {
+  const textarea = document.createElement('textarea')
+  textarea.innerHTML = text
+  return textarea.value
+}
+
+export const getPlainTextFromHtml = (html: string): string => {
+  const tempDiv = document.createElement('div')
+  tempDiv.innerHTML = html
+  return tempDiv.textContent || tempDiv.innerText || ''
+}
+
+export const getHtmlPlainTextTitle = (html: string): string => {
+  return decodeHtmlEntities(getPlainTextFromHtml(html))
+}
