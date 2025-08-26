@@ -1,11 +1,19 @@
 import { useRoutes } from 'react-router'
 import NotFound from './components/NotFound'
+import AuthLayout from './layouts/auth'
+import ManageLogin from './pages/manage/Login'
 
 export default function useRouteElements() {
   const routeElements = useRoutes([
     {
       path: '',
-      element: <h1>Fast Food Website</h1>
+      element: <AuthLayout />,
+      children: [
+        {
+          path: 'manage/login',
+          element: <ManageLogin />
+        }
+      ]
     },
     {
       path: '*',
