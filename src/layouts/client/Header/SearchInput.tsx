@@ -4,6 +4,7 @@ import Config from '@/constants/config'
 import { formatCurrency } from '@/lib/format'
 import { generateNameId, removeVietnameseAccents } from '@/lib/utils'
 import { useAllProductsQuery } from '@/queries/useProduct'
+import { useAutoTrackBehaviorMutation } from '@/queries/useRecommendation'
 import type { ProductType } from '@/schemaValidations/product.schema'
 import { Search } from 'lucide-react'
 import { useEffect, useState, useRef, type KeyboardEvent } from 'react'
@@ -27,7 +28,6 @@ export default function SearchInput() {
     return normalizedProductName.includes(normalizedSearchTerm)
   })
 
-  // Đóng dropdown khi click ra ngoài
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -46,7 +46,6 @@ export default function SearchInput() {
     }
   }, [])
 
-  // Hiển thị dropdown khi có searchTerm
   useEffect(() => {
     const isFocused = document.activeElement === inputRef.current
     if (searchTerm.trim() && isFocused) {
@@ -58,8 +57,7 @@ export default function SearchInput() {
   }, [searchTerm])
 
   const closeDropdown = (product: ProductType) => {
-    setSearchTerm('') // Xóa nội dung tìm kiếm
-    // setSearchTerm(product.name) // Giữ lại searchTerm
+    setSearchTerm('')
     setShowDropdown(false)
     setSelectedIndex(-1)
     inputRef.current?.blur() // bỏ focus để useEffect không bật lại dropdown
@@ -74,37 +72,26 @@ export default function SearchInput() {
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (!filteredProducts.length) return
 
-    // Xử lý phím mũi tên xuống
     if (e.key === 'ArrowDown') {
       e.preventDefault()
       setSelectedIndex((prev) => (prev < filteredProducts.length - 1 ? prev + 1 : 0))
-    }
-
-    // Xử lý phím mũi tên lên
-    else if (e.key === 'ArrowUp') {
+    } else if (e.key === 'ArrowUp') {
       e.preventDefault()
       setSelectedIndex((prev) => (prev > 0 ? prev - 1 : filteredProducts.length - 1))
-    }
-
-    // Xử lý phím Enter
-    else if (e.key === 'Enter') {
+    } else if (e.key === 'Enter') {
       e.preventDefault()
 
-      // Nếu chỉ có một sản phẩm, chuyển trực tiếp đến sản phẩm đó
       if (filteredProducts.length === 1) {
         navigateToProduct(filteredProducts[0])
-      }
-      // Nếu có nhiều sản phẩm và đã chọn một sản phẩm
-      else if (selectedIndex >= 0) {
+      } else if (selectedIndex >= 0) {
         navigateToProduct(filteredProducts[selectedIndex])
       }
-    }
-
-    // Xử lý phím Escape
-    else if (e.key === 'Escape') {
+    } else if (e.key === 'Escape') {
       setShowDropdown(false)
     }
   }
+
+  const { trackViewBehavior } = useAutoTrackBehaviorMutation()
 
   return (
     <div className='relative flex-1 max-w-md mx-4'>
@@ -134,6 +121,7 @@ export default function SearchInput() {
                 }`}
                 onClick={() => {
                   closeDropdown(product)
+                  trackViewBehavior(product.id)
                 }}
               >
                 <img

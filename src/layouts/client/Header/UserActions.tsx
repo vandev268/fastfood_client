@@ -13,6 +13,7 @@ import { useAppContext } from '@/components/AppProvider'
 import { clearLocalStorage, getFirstNameClient, getRefreshTokenFromLocalStorage } from '@/lib/utils'
 import { useLogoutMutation } from '@/queries/useAuth'
 import { toast } from 'sonner'
+import { useAllCartItemsQuery } from '@/queries/useCart'
 import { RoleName } from '@/constants/role'
 
 const MANAGE_ROLE = [RoleName.Admin, RoleName.Manager] as string[]
@@ -21,6 +22,9 @@ const EMPLOYEE_ROLE = [RoleName.Admin, RoleName.Manager, RoleName.Employee] as s
 export default function UserActions() {
   const { isAuth, profile, setProfile } = useAppContext()
   const refreshToken = getRefreshTokenFromLocalStorage()
+
+  const cartItemsQuery = useAllCartItemsQuery({ enabled: Boolean(refreshToken) })
+  const totalCartItems = cartItemsQuery.data?.data.totalItems || 0
 
   const logoutMutation = useLogoutMutation()
   const handleLogout = async () => {
@@ -45,7 +49,7 @@ export default function UserActions() {
         >
           <ShoppingCart className='h-6 w-6' />
           <span className='absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center'>
-            0
+            {totalCartItems}
           </span>
         </Link>
       )}

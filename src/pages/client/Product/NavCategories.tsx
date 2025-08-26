@@ -153,7 +153,6 @@ export default function NavCategories() {
       e.preventDefault()
       return
     }
-
     if (selectedCategory?.id === category.id) {
       setSelectedCategory(null)
       setSearchParams({})

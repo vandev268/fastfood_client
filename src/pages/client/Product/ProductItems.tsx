@@ -12,6 +12,7 @@ import { productSocket } from '@/lib/sockets'
 import type { MessageResType } from '@/schemaValidations/response.schema'
 import { useAllProductsQuery } from '@/queries/useProduct'
 import { useAppContext } from '@/components/AppProvider'
+import { useAutoTrackBehaviorMutation } from '@/queries/useRecommendation'
 import { formatCurrency } from '@/lib/format'
 
 const PAGE_SIZE = 20
@@ -22,6 +23,8 @@ export default function ProductItems() {
   const query = useQuery()
   const currentPage = query.get('page') ? Number(query.get('page')) : 1
   const categoryId = query.get('category') ? Number(getIdByNameId(query.get('category') as string)) : undefined
+
+  const { trackViewBehavior } = useAutoTrackBehaviorMutation()
 
   const categoryDetailQuery = useCategoryDetailQuery(categoryId)
   const categoryDetail = categoryDetailQuery.data?.data
@@ -186,7 +189,11 @@ export default function ProductItems() {
       key={product.id}
       className='group cursor-pointer transition-all duration-300 hover:shadow-lg bg-white rounded-xl border border-dashed border-gray-100 hover:border-gray-300 overflow-hidden h-full flex flex-col'
     >
-      <Link to={generateNameId({ name: product.name, id: product.id })} className='h-full flex flex-col'>
+      <Link
+        to={generateNameId({ name: product.name, id: product.id })}
+        className='h-full flex flex-col'
+        onClick={() => trackViewBehavior(product.id)}
+      >
         <div className='aspect-square overflow-hidden w-full relative'>
           <img
             src={product.images[0] || Config.ImageBaseUrl}

@@ -20,6 +20,7 @@ import { useProductVariantsQuery } from '@/queries/useProduct'
 import { ScrollArea } from './ui/scroll-area'
 import { useAddToCartMutation } from '@/queries/useCart'
 import { toast } from 'sonner'
+import { useAutoTrackBehaviorMutation } from '@/queries/useRecommendation'
 import { RecommendationType } from '@/constants/recommendation'
 
 export default function ViewProduct({
@@ -35,6 +36,7 @@ export default function ViewProduct({
   const [selectedProduct, setSelectedProduct] = useState<ProductRecommendationType | null>(null)
   const [selectedVariantOptions, setSelectedVariantOptions] = useState<Record<string, string>>({})
   const [selectedVariant, setSelectedVariant] = useState<VariantType | null>(null)
+  const { trackViewBehavior, trackAddToCartBehavior } = useAutoTrackBehaviorMutation()
 
   const productVariantsQuery = useProductVariantsQuery(selectedProduct?.id)
   const productVariants = useMemo(() => {
@@ -103,6 +105,9 @@ export default function ViewProduct({
         variantId: selectedVariant.id,
         quantity: buyCount
       })
+      if (selectedProduct) {
+        trackAddToCartBehavior(selectedProduct.id, buyCount)
+      }
       toast.success('Đã thêm sản phẩm vào giỏ hàng')
       handleCloseVariantSelector()
     } catch (error) {
@@ -147,6 +152,7 @@ export default function ViewProduct({
                       <Button
                         onClick={() => {
                           setSelectedProduct(product)
+                          trackViewBehavior(product.id)
                         }}
                         className='bg-primary rounded-lg font-medium hover:bg-primary/90 transition-all duration-200 transform scale-90 group-hover:scale-100 shadow-lg cursor-pointer'
                       >
@@ -157,6 +163,7 @@ export default function ViewProduct({
                   <Link
                     to={`/products/${generateNameId({ name: product.name, id: product.id })}`}
                     className='p-3 flex-1 flex flex-col'
+                    onClick={() => trackViewBehavior(product.id)}
                   >
                     <div className='flex-1 flex flex-col justify-center text-center mb-3'>
                       <h2 className='text-base font-semibold line-clamp-2 text-gray-900 capitalize group-hover:text-primary transition-colors mb-2'>

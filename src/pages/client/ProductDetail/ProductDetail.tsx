@@ -7,7 +7,6 @@ import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Star } from 'lucide-react'
-import { TagType } from '@/constants/tag'
 import Config from '@/constants/config'
 import { ShoppingCart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -21,6 +20,9 @@ import type { MessageResType } from '@/schemaValidations/response.schema'
 import { useProductDetailQuery } from '@/queries/useProduct'
 import { useAppContext } from '@/components/AppProvider'
 import DOMPurify from 'dompurify'
+import ViewProduct from '@/components/ViewProduct'
+import { useAutoTrackBehaviorMutation, useSimilarProductsQuery } from '@/queries/useRecommendation'
+import { RecommendationType } from '@/constants/recommendation'
 import { formatCurrency, formatDateTimeToLocaleString, formatTagTypeColor } from '@/lib/format'
 
 export default function ProductDetail() {
@@ -29,6 +31,8 @@ export default function ProductDetail() {
   const navigate = useNavigate()
   const params = useParams()
   const productId = getIdByNameId(params.productName as string)
+
+  const { trackAddToCartBehavior } = useAutoTrackBehaviorMutation()
 
   const { data, refetch } = useProductDetailQuery(Number(productId))
   const product = useMemo(() => {
@@ -214,6 +218,7 @@ export default function ProductDetail() {
           variantId: selectedVariant.id,
           quantity: buyCount
         })
+        trackAddToCartBehavior(selectedVariant.productId, buyCount)
         toast.success('Đã thêm sản phẩm vào giỏ hàng')
       }
       return
@@ -231,6 +236,7 @@ export default function ProductDetail() {
           variantId: selectedVariant.id,
           quantity: buyCount
         })
+        trackAddToCartBehavior(selectedVariant.productId, buyCount)
         navigate(`/cart`, {
           state: { cartItemId: result.data.id }
         })
@@ -269,6 +275,12 @@ export default function ProductDetail() {
       )
     })
   }
+
+  const similarProductsQuery = useSimilarProductsQuery(Number(productId), { limit: 5 })
+  const similarProducts = useMemo(() => {
+    if (similarProductsQuery.isPending || !similarProductsQuery.data) return []
+    return similarProductsQuery.data.data.data
+  }, [similarProductsQuery.data, similarProductsQuery.isPending])
 
   if (!product) return <div>Loading...</div>
   return (
@@ -532,6 +544,7 @@ export default function ProductDetail() {
               <h2 className='text-xl font-bold text-gray-900'>Sản phẩm tương tự</h2>
             </div>
           </div>
+          <ViewProduct recommendationType={RecommendationType.SimilarProducts} products={similarProducts} />
         </div>
       </div>
       <Dialog open={isOpenPreview} onOpenChange={setIsOpenPreview}>
