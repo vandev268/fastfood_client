@@ -206,6 +206,7 @@ export const formatTableStatusText = (status: string) => {
       return LANGUAGE === 'vi' ? 'Tất cả' : 'All'
   }
 }
+
 export const formatTableStatusColor = ({
   className = 'text-xs font-medium me-2 px-2.5 py-0.5 rounded-full',
   status
@@ -226,6 +227,16 @@ export const formatTableStatusColor = ({
       return `${className} bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300`
     default:
       return `${className} bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300`
+  }
+}
+
+export const formatTableTypeText = (capacity: number, lang: string = 'vi') => {
+  if (lang === 'vi') {
+    if (capacity <= 1) return 'Bàn đơn'
+    if (capacity <= 2) return 'Bàn đôi'
+    if (capacity <= 6) return 'Bàn gia đình'
+    if (capacity <= 10) return 'Bàn nhóm'
+    return 'Bàn lớn'
   }
 }
 

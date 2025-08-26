@@ -161,3 +161,25 @@ export const parseVariantInfo = (variantValue: string, variantsConfig: ProductVa
 
   return variantInfo
 }
+
+export const getDateAndTimeFromDate = (date: string | Date) => {
+  const dateObj = date instanceof Date ? date : new Date(date)
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+    // GMT: 'GMT+7',
+    timeZone: 'Asia/Ho_Chi_Minh'
+  }
+  const formattedDate = dateObj.toLocaleString('en-US', options)
+  const [datePart, timePart] = formattedDate.split(', ')
+  const [month, day, year] = datePart.split('/')
+  const [hour, minute] = timePart.split(':')
+  return {
+    date: `${month}/${day}/${year}`,
+    time: `${hour}:${minute}`
+  }
+}

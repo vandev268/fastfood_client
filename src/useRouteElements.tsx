@@ -23,6 +23,7 @@ import ProductDetail from './pages/client/ProductDetail'
 import Cart from './pages/client/Cart'
 import PaymentCallback from './pages/client/PaymentCallback'
 import Checkout from './pages/client/Checkout'
+import Reservation from './pages/client/Reservation'
 
 const MANAGE_ROLE = [RoleName.Admin, RoleName.Manager] as string[]
 const EMPLOYEE_ROLE = [RoleName.Admin, RoleName.Manager, RoleName.Employee] as string[]
@@ -78,6 +79,10 @@ export default function useRouteElements() {
         {
           path: 'products/:productName',
           element: <ProductDetail />
+        },
+        {
+          path: 'reservation',
+          element: <Reservation />
         }
       ]
     },
