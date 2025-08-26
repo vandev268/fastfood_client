@@ -1,10 +1,13 @@
 import { Toaster } from 'sonner'
 import { ThemeProvider } from './components/ThemeProvider'
+import useRouteElements from './useRouteElements'
 
 function App() {
+  const routeElements = useRouteElements()
+
   return (
     <ThemeProvider>
-      <h1>Fast Food Website</h1>
+      {routeElements}
       <Toaster closeButton />
     </ThemeProvider>
   )
