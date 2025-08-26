@@ -29,6 +29,7 @@ import Information from './pages/client/Profile/pages/Information'
 import ChangePassword from './pages/client/Profile/pages/ChangePassword'
 import ReservationHistory from './pages/client/Profile/pages/ReservationHistory'
 import OrderHistory from './pages/client/Profile/pages/OrderHistory'
+import Home from './pages/client/Home'
 
 const MANAGE_ROLE = [RoleName.Admin, RoleName.Manager] as string[]
 const EMPLOYEE_ROLE = [RoleName.Admin, RoleName.Manager, RoleName.Employee] as string[]
@@ -76,6 +77,11 @@ export default function useRouteElements() {
         {
           path: 'oauth-google-callback',
           element: <OAuth />
+        },
+        {
+          path: '',
+          index: true,
+          element: <Home />
         },
         {
           path: 'products',
