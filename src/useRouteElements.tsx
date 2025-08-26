@@ -6,6 +6,7 @@ import AuthLayout from './layouts/auth'
 import ManageLayout from './layouts/manage'
 import ManageLogin from './pages/manage/Login'
 import ManageRole from './pages/manage/Role'
+import ManageUser from './pages/manage/User'
 
 const MANAGE_ROLE = [RoleName.Admin, RoleName.Manager] as string[]
 const EMPLOYEE_ROLE = [RoleName.Admin, RoleName.Manager, RoleName.Employee] as string[]
@@ -104,7 +105,7 @@ export default function useRouteElements() {
             },
             {
               path: 'users',
-              element: <h1>Users</h1>
+              element: <ManageUser />
             },
             {
               path: 'roles',
