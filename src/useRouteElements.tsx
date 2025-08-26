@@ -13,6 +13,11 @@ import ManageProduct from './pages/manage/Product'
 import ManageTable from './pages/manage/Table'
 import ManageCoupon from './pages/manage/Coupon'
 import ManageSetting from './pages/manage/Setting'
+import ClientLayout from './layouts/client'
+import ForgotPassword from './pages/client/ForgotPassword'
+import Login from './pages/client/Login'
+import OAuth from './pages/client/OAuth'
+import Register from './pages/client/Register'
 
 const MANAGE_ROLE = [RoleName.Admin, RoleName.Manager] as string[]
 const EMPLOYEE_ROLE = [RoleName.Admin, RoleName.Manager, RoleName.Employee] as string[]
@@ -53,6 +58,40 @@ function RejectedRoute() {
 
 export default function useRouteElements() {
   const routeElements = useRoutes([
+    {
+      path: '',
+      element: <ClientLayout />,
+      children: [
+        {
+          path: 'oauth-google-callback',
+          element: <OAuth />
+        }
+      ]
+    },
+    {
+      path: '',
+      element: <RejectedRoute />,
+      children: [
+        {
+          path: '',
+          element: <ClientLayout />,
+          children: [
+            {
+              path: 'login',
+              element: <Login />
+            },
+            {
+              path: 'register',
+              element: <Register />
+            },
+            {
+              path: 'forgot-password',
+              element: <ForgotPassword />
+            }
+          ]
+        }
+      ]
+    },
     {
       path: '',
       element: <RejectedRoute />,

@@ -124,3 +124,21 @@ export const removeVietnameseAccents = (str: string): string => {
     .replace(/đ/g, 'd')
     .replace(/Đ/g, 'D')
 }
+
+export const generateNameId = (params: { name: string; id: number }) => {
+  return `${params.name}-.${params.id}`
+}
+
+export const getIdByNameId = (productName: string) => {
+  return productName.split('-.')[1]
+}
+
+export const getFirstNameClient = (name: string) => {
+  const arr = name.split(' ')
+  const firstName = arr[arr.length - 1]
+  const formattedFirstName = firstName.charAt(0).toUpperCase() + firstName.slice(1)
+  if (formattedFirstName.length > 6) {
+    return formattedFirstName.slice(0, 6) + '...'
+  }
+  return formattedFirstName
+}
