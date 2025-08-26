@@ -10,6 +10,7 @@ import ManageUser from './pages/manage/User'
 import ManageTag from './pages/manage/Tag'
 import ManageCategory from './pages/manage/Category'
 import ManageProduct from './pages/manage/Product'
+import ManageTable from './pages/manage/Table'
 
 const MANAGE_ROLE = [RoleName.Admin, RoleName.Manager] as string[]
 const EMPLOYEE_ROLE = [RoleName.Admin, RoleName.Manager, RoleName.Employee] as string[]
@@ -96,7 +97,7 @@ export default function useRouteElements() {
             },
             {
               path: 'tables',
-              element: <h1>Tables</h1>
+              element: <ManageTable />
             },
             {
               path: 'reservations',

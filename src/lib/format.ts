@@ -1,4 +1,5 @@
 import { ProductStatus, TypeProduct } from '@/constants/product'
+import { TableLocation, TableStatus } from '@/constants/table'
 import { TagType } from '@/constants/tag'
 import { UserStatus } from '@/constants/user'
 import { format } from 'date-fns'
@@ -124,6 +125,63 @@ export const formatProductStatusColor = ({
     case ProductStatus.Pending:
       return `${className} bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300`
     case ProductStatus.Hidden:
+      return `${className} bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300`
+    default:
+      return `${className} bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300`
+  }
+}
+
+export const formatTableLocationText = (location: string) => {
+  switch (location) {
+    case TableLocation.Floor1:
+      return LANGUAGE === 'vi' ? 'Tầng 1' : 'Floor 1'
+    case TableLocation.Floor2:
+      return LANGUAGE === 'vi' ? 'Tầng 2' : 'Floor 2'
+    case TableLocation.Floor3:
+      return LANGUAGE === 'vi' ? 'Tầng 3' : 'Floor 3'
+    case TableLocation.Outdoor:
+      return LANGUAGE === 'vi' ? 'Ngoài trời' : 'Outdoor'
+    case TableLocation.Balcony:
+      return LANGUAGE === 'vi' ? 'Ban công' : 'Balcony'
+    case TableLocation.PrivateRoom:
+      return LANGUAGE === 'vi' ? 'Phòng riêng' : 'Private Room'
+    default:
+      return LANGUAGE === 'vi' ? 'Tất cả' : 'All'
+  }
+}
+export const formatTableStatusText = (status: string) => {
+  switch (status) {
+    case TableStatus.Available:
+      return LANGUAGE === 'vi' ? 'Trống' : 'Available'
+    case TableStatus.Occupied:
+      return LANGUAGE === 'vi' ? 'Có khách' : 'Occupied'
+    case TableStatus.Reserved:
+      return LANGUAGE === 'vi' ? 'Đã đặt' : 'Reserved'
+    case TableStatus.Cleaning:
+      return LANGUAGE === 'vi' ? 'Đang dọn' : 'Cleaning'
+    case TableStatus.Disabled:
+      return LANGUAGE === 'vi' ? 'Tạm khóa' : 'Disabled'
+    default:
+      return LANGUAGE === 'vi' ? 'Tất cả' : 'All'
+  }
+}
+export const formatTableStatusColor = ({
+  className = 'text-xs font-medium me-2 px-2.5 py-0.5 rounded-full',
+  status
+}: {
+  className?: string
+  status: string
+}) => {
+  switch (status) {
+    case TableStatus.Available:
+      return `${className} bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300`
+    case TableStatus.Occupied:
+      return `${className} bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300`
+    case TableStatus.Reserved:
+      return `${className} bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300`
+    case TableStatus.Cleaning:
+      return `${className} bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300`
+    case TableStatus.Disabled:
       return `${className} bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300`
     default:
       return `${className} bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300`
