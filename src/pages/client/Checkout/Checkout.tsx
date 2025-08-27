@@ -49,6 +49,7 @@ import { OrderFee } from '@/constants/order'
 import { CouponDiscountType } from '@/constants/coupon'
 import { useCreateOnlineOrderMutation } from '@/queries/useOrder'
 import type { CreateOnlineOrderBodyType } from '@/schemaValidations/order.schema'
+import { useAutoTrackBehaviorMutation } from '@/queries/useRecommendation'
 import { TypeProduct } from '@/constants/product'
 import { formatCurrency } from '@/lib/format'
 
@@ -220,7 +221,6 @@ export default function Checkout() {
       setCouponCode('')
       toast.success(`Mã giảm giá ${coupon.code} (${discountText}) đã được áp dụng thành công!`)
     } catch (error) {
-      console.error('Error checking coupon:', error)
       toast.error('Có lỗi xảy ra khi kiểm tra mã giảm giá!')
     } finally {
       setIsCheckingCoupon(false)
@@ -280,7 +280,6 @@ export default function Checkout() {
   }
 
   const handleQuantityChange = (id: number, value: number) => {
-    console.log('handleQuantityChange', id, value)
     setOrderItems((prev) => {
       return prev.map((item) => {
         if (item.id === id) {
@@ -369,6 +368,7 @@ export default function Checkout() {
     }
   }, [selectedAddressId])
 
+  const { trackOrderBehavior } = useAutoTrackBehaviorMutation()
   const createOnlineOrderMutation = useCreateOnlineOrderMutation()
   const handleOrder = async () => {
     if (createOnlineOrderMutation.isPending) return
@@ -385,6 +385,24 @@ export default function Checkout() {
         note: orderNote
       }
       const result = await createOnlineOrderMutation.mutateAsync(body)
+      const productIdsSet = new Set(orderItems.map((item) => item.variant.productId))
+      for (const productId of productIdsSet) {
+        const { totalAmount, totalQuantity } = orderItems
+          .filter((item) => item.variant.productId === productId)
+          .reduce(
+            (acc, item) => {
+              acc.totalAmount += item.variant.price * item.quantity
+              acc.totalQuantity += item.quantity
+              return acc
+            },
+            { totalAmount: 0, totalQuantity: 0 }
+          )
+        trackOrderBehavior({
+          productId,
+          quantity: totalQuantity,
+          amount: totalAmount
+        })
+      }
       if (paymentMethod !== PaymentMethod.COD) {
         window.location.href = result.data.paymentUrl as string
       } else {

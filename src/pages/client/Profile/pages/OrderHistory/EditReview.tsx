@@ -12,11 +12,12 @@ import { Button } from '@/components/ui/button'
 import { useReviewDetailByIdQuery, useUpdateReviewMutation } from '@/queries/useReview'
 import { handleError } from '@/lib/utils'
 import { toast } from 'sonner'
+import { useAutoTrackBehaviorMutation } from '@/queries/useRecommendation'
 
 export default function EditReview({ reviewId, children }: { reviewId: number | undefined; children: ReactNode }) {
   const [open, setOpen] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
-  const [hoveredStar, setHoveredStar] = useState<number>(0)
+  const [hoveredStar, setHoveredStar] = useState<number>(5)
 
   const form = useForm<UpdateReviewBodyType>({
     resolver: zodResolver(UpdateReviewBodySchema),
@@ -105,6 +106,7 @@ export default function EditReview({ reviewId, children }: { reviewId: number | 
     })
   }
 
+  const { trackReviewBehavior } = useAutoTrackBehaviorMutation()
   const updateReviewMutation = useUpdateReviewMutation()
   const onSubmit = async (body: UpdateReviewBodyType) => {
     if (updateReviewMutation.isPending) return
@@ -118,6 +120,7 @@ export default function EditReview({ reviewId, children }: { reviewId: number | 
           orderId: body.orderId
         }
       })
+      trackReviewBehavior(body.productId, body.rating, body.content)
       toast.success('Đánh giá đã được cập nhật thành công!')
 
       form.reset()

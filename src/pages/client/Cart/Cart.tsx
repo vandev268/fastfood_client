@@ -9,6 +9,7 @@ import keyBy from 'lodash/keyBy'
 import type { CartItemDetailType } from '@/schemaValidations/cart.schema'
 import Config from '@/constants/config'
 import { useAllCartItemsQuery, useDeleteCartItemsMutation, useUpdateCartItemMutation } from '@/queries/useCart'
+import { useAutoTrackBehaviorMutation } from '@/queries/useRecommendation'
 import { formatCurrency } from '@/lib/format'
 
 export default function Cart() {
@@ -16,6 +17,8 @@ export default function Cart() {
   const location = useLocation()
   const cartItemId = location.state?.cartItemId as number | undefined
   const { extendedCartItems, setExtendedCartItems } = useAppContext()
+
+  const { trackViewBehavior } = useAutoTrackBehaviorMutation()
 
   const cartItemsQuery = useAllCartItemsQuery({ enabled: true })
   const cartItems = cartItemsQuery.data?.data.data || []
@@ -184,6 +187,7 @@ export default function Cart() {
                                   name: item.variant.product.name,
                                   id: item.variant.product.id
                                 })}`}
+                                onClick={() => trackViewBehavior(item.variant.product.id)}
                               >
                                 <img
                                   alt={item.variant.product.name}
@@ -196,6 +200,7 @@ export default function Cart() {
                                     name: item.variant.product.name,
                                     id: item.variant.product.id
                                   })}`}
+                                  onClick={() => trackViewBehavior(item.variant.product.id)}
                                   className='line-clamp-2 text-lg font-semibold text-gray-900'
                                 >
                                   {item.variant.product.name}

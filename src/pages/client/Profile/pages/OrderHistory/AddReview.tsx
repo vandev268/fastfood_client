@@ -13,6 +13,7 @@ import { useCreateReviewMutation } from '@/queries/useReview'
 import { handleError } from '@/lib/utils'
 import { toast } from 'sonner'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { useAutoTrackBehaviorMutation } from '@/queries/useRecommendation'
 
 export default function AddReview({
   productId,
@@ -99,11 +100,13 @@ export default function AddReview({
     })
   }
 
+  const { trackReviewBehavior } = useAutoTrackBehaviorMutation()
   const createReviewMutation = useCreateReviewMutation()
   const onSubmit = async (body: CreateReviewBodyType) => {
     if (createReviewMutation.isPending) return
     try {
       await createReviewMutation.mutateAsync(body)
+      trackReviewBehavior(body.productId, body.rating, body.content)
       toast.success('Đánh giá đã được gửi thành công!')
       form.reset()
       setOpen(false)
