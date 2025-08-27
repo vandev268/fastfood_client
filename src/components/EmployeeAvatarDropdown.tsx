@@ -63,7 +63,7 @@ export default function EmployeeAvatarDropdown() {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link to='/employee/profile' className='cursor-pointer'>
+          <Link to='/employee/more' className='cursor-pointer'>
             Tài khoản cá nhân
           </Link>
         </DropdownMenuItem>

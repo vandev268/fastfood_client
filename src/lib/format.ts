@@ -1,4 +1,5 @@
 import { CouponDiscountType } from '@/constants/coupon'
+import { DraftItemStatus } from '@/constants/draft-item'
 import { OrderStatus, OrderType } from '@/constants/order'
 import { PaymentMethod } from '@/constants/payment'
 import { ProductStatus, TypeProduct } from '@/constants/product'
@@ -407,6 +408,46 @@ export const formatReservationStatusColor = ({
       return `${className} bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300`
     case ReservationStatus.Cancelled:
       return `${className} bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300`
+    default:
+      return `${className} bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300`
+  }
+}
+
+export const formatRoleNameWithPrefix = (roleName: string) => {
+  return roleName.slice(0, 2).toUpperCase()
+}
+
+export const formatDraftItemStatusText = (status: string) => {
+  switch (status) {
+    case DraftItemStatus.Pending:
+      return LANGUAGE === 'vi' ? 'Đang chờ' : 'Pending'
+    case DraftItemStatus.Preparing:
+      return LANGUAGE === 'vi' ? 'Đang chuẩn bị' : 'Preparing'
+    case DraftItemStatus.Ready:
+      return LANGUAGE === 'vi' ? 'Sẵn sàng' : 'Ready'
+    case DraftItemStatus.Served:
+      return LANGUAGE === 'vi' ? 'Đã phục vụ' : 'Served'
+    default:
+      return LANGUAGE === 'vi' ? 'Tất cả' : 'All'
+  }
+}
+
+export const formatDraftItemStatusColor = ({
+  className = 'text-xs font-medium me-2 px-2.5 py-0.5 rounded-full',
+  status
+}: {
+  className?: string
+  status: string
+}) => {
+  switch (status) {
+    case DraftItemStatus.Pending:
+      return `${className} bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300`
+    case DraftItemStatus.Preparing:
+      return `${className} bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300`
+    case DraftItemStatus.Ready:
+      return `${className} bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300`
+    case DraftItemStatus.Served:
+      return `${className} bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300`
     default:
       return `${className} bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300`
   }
