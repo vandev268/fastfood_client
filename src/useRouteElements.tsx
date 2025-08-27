@@ -32,6 +32,8 @@ import ChangePassword from './pages/client/Profile/pages/ChangePassword'
 import ReservationHistory from './pages/client/Profile/pages/ReservationHistory'
 import OrderHistory from './pages/client/Profile/pages/OrderHistory'
 import Home from './pages/client/Home'
+import EmployeeLayout from './layouts/employee'
+import EmployeeTable from './pages/employee/Table'
 
 const MANAGE_ROLE = [RoleName.Admin, RoleName.Manager] as string[]
 const EMPLOYEE_ROLE = [RoleName.Admin, RoleName.Manager, RoleName.Employee] as string[]
@@ -230,6 +232,41 @@ export default function useRouteElements() {
                   element: <OrderHistory orderType='DineIn' />
                 }
               ]
+            }
+          ]
+        },
+        {
+          path: 'employee',
+          element: <EmployeeLayout />,
+          children: [
+            {
+              path: '',
+              index: true,
+              element: <h1>Order</h1>
+            },
+            {
+              path: 'orders',
+              element: <h1>Order</h1>
+            },
+            {
+              path: 'deliveries',
+              element: <h1>Delivery</h1>
+            },
+            {
+              path: 'kitchen',
+              element: <h1>Kitchen</h1>
+            },
+            {
+              path: 'tables',
+              element: <EmployeeTable />
+            },
+            {
+              path: 'reservations',
+              element: <h1>Reservations</h1>
+            },
+            {
+              path: 'profile',
+              element: <h1>Profile</h1>
             }
           ]
         }
