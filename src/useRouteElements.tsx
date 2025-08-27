@@ -38,6 +38,7 @@ import EmployeeReservation from './pages/employee/Reservation'
 import EmployeeMore from './pages/employee/More'
 import EmployeeDeliveryOrder from './pages/employee/Delivery'
 import EmployeeManageOrder from './pages/employee/Order'
+import EmployeeManageKitchen from './pages/employee/Kitchen'
 
 const MANAGE_ROLE = [RoleName.Admin, RoleName.Manager] as string[]
 const EMPLOYEE_ROLE = [RoleName.Admin, RoleName.Manager, RoleName.Employee] as string[]
@@ -258,7 +259,7 @@ export default function useRouteElements() {
             },
             {
               path: 'kitchen',
-              element: <h1>Kitchen</h1>
+              element: <EmployeeManageKitchen />
             },
             {
               path: 'tables',

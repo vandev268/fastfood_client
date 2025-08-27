@@ -1,6 +1,6 @@
 import { CouponDiscountType } from '@/constants/coupon'
 import { DraftItemStatus } from '@/constants/draft-item'
-import { OrderStatus, OrderType } from '@/constants/order'
+import { KitchenOrderStatus, OrderStatus, OrderType } from '@/constants/order'
 import { PaymentMethod } from '@/constants/payment'
 import { ProductStatus, TypeProduct } from '@/constants/product'
 import { ReservationStatus } from '@/constants/reservation'
@@ -450,5 +450,20 @@ export const formatDraftItemStatusColor = ({
       return `${className} bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300`
     default:
       return `${className} bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300`
+  }
+}
+
+export const formatKitchenStatusText = (status: string) => {
+  switch (status) {
+    case KitchenOrderStatus.Pending:
+      return LANGUAGE === 'vi' ? 'Chờ xử lý' : 'Pending'
+    case KitchenOrderStatus.Confirmed:
+      return LANGUAGE === 'vi' ? 'Đã xác nhận' : 'Confirmed'
+    case KitchenOrderStatus.Preparing:
+      return LANGUAGE === 'vi' ? 'Đang chuẩn bị' : 'Preparing'
+    case KitchenOrderStatus.Ready:
+      return LANGUAGE === 'vi' ? 'Sẵn sàng' : 'Ready'
+    case KitchenOrderStatus.CancelledByKitchen:
+      return LANGUAGE === 'vi' ? 'Đã hủy' : 'Cancelled'
   }
 }
