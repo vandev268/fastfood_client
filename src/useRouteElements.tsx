@@ -15,6 +15,7 @@ import ManageCoupon from './pages/manage/Coupon'
 import ManageSetting from './pages/manage/Setting'
 import ManageOrderHistory from './pages/manage/Order'
 import ManageReservationHistory from './pages/manage/Reservation'
+import ManageDashboard from './pages/manage/Dashboard'
 import ClientLayout from './layouts/client'
 import ForgotPassword from './pages/client/ForgotPassword'
 import Login from './pages/client/Login'
@@ -156,7 +157,7 @@ export default function useRouteElements() {
           children: [
             {
               path: 'dashboard',
-              element: <h1>Dashboard</h1>
+              element: <ManageDashboard />
             },
             {
               path: 'products',
