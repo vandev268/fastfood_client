@@ -13,6 +13,7 @@ import ManageProduct from './pages/manage/Product'
 import ManageTable from './pages/manage/Table'
 import ManageCoupon from './pages/manage/Coupon'
 import ManageSetting from './pages/manage/Setting'
+import ManageOrderHistory from './pages/manage/Order'
 import ClientLayout from './layouts/client'
 import ForgotPassword from './pages/client/ForgotPassword'
 import Login from './pages/client/Login'
@@ -175,7 +176,7 @@ export default function useRouteElements() {
             },
             {
               path: 'orders',
-              element: <h1>Orders</h1>
+              element: <ManageOrderHistory />
             },
             {
               path: 'users',
