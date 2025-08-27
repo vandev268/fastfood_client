@@ -34,6 +34,7 @@ import OrderHistory from './pages/client/Profile/pages/OrderHistory'
 import Home from './pages/client/Home'
 import EmployeeLayout from './layouts/employee'
 import EmployeeTable from './pages/employee/Table'
+import EmployeeReservation from './pages/employee/Reservation'
 
 const MANAGE_ROLE = [RoleName.Admin, RoleName.Manager] as string[]
 const EMPLOYEE_ROLE = [RoleName.Admin, RoleName.Manager, RoleName.Employee] as string[]
@@ -262,7 +263,7 @@ export default function useRouteElements() {
             },
             {
               path: 'reservations',
-              element: <h1>Reservations</h1>
+              element: <EmployeeReservation />
             },
             {
               path: 'profile',
