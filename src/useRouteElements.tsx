@@ -14,6 +14,7 @@ import ManageTable from './pages/manage/Table'
 import ManageCoupon from './pages/manage/Coupon'
 import ManageSetting from './pages/manage/Setting'
 import ManageOrderHistory from './pages/manage/Order'
+import ManageReservationHistory from './pages/manage/Reservation'
 import ClientLayout from './layouts/client'
 import ForgotPassword from './pages/client/ForgotPassword'
 import Login from './pages/client/Login'
@@ -172,7 +173,7 @@ export default function useRouteElements() {
             },
             {
               path: 'reservations',
-              element: <h1>Reservations</h1>
+              element: <ManageReservationHistory />
             },
             {
               path: 'orders',
